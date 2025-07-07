@@ -1,0 +1,33 @@
+#main-screen {
+    layout: horizontal;
+}
+
+#left-pane {
+    width: 25;
+    height: 100%;
+    border-right: heavy steelblue;
+    background: $panel;
+}
+
+#left-pane Button {
+    width: 100%;
+    border: none;
+    border-bottom: tall $background;
+    text-align: left;
+    padding-left: 2;
+}
+
+#left-pane Button:hover {
+    background: $primary-lighten-2;
+}
+
+#left-pane Button.active {
+    background: $accent;
+    color: $text;
+}
+
+#right-pane {
+    width: 1fr;
+    height: 100%;
+    padding: 1 2;
+}
