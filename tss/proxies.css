@@ -1,0 +1,53 @@
+/* 顶部按钮栏样式 */
+#header-grid {
+    layout: horizontal;
+    padding: 1;
+    border-bottom: heavy $background;
+    background: $panel;
+}
+
+.header-title {
+    width: 1fr;
+    text-align: left;
+    color: $text;
+}
+
+.header-button {
+    width: auto;
+    border: none;
+    background: $primary-lighten-2;
+    color: $text;
+}
+
+.header-button:hover {
+    background: $primary-lighten-1;
+}
+
+/* 代理组信息样式 */
+#settings-grid {
+    layout: vertical;
+    padding: 1;
+}
+
+.group-box {
+    border: heavy $background;
+    background: $panel-lighten-1;
+    padding: 1;
+}
+
+.group-label {
+    color: $text;
+}
+
+.group-now {
+    color: $primary-darken-1;
+    margin-bottom: 1;
+}
+
+.node-name {
+    color: $text;
+}
+
+.node-delay {
+    color: $accent;
+}

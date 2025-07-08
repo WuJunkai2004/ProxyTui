@@ -1,23 +1,11 @@
 from textual.app        import App, ComposeResult
-from textual.containers import Horizontal, VerticalScroll, Vertical, Grid
+from textual.containers import Horizontal, VerticalScroll
 from textual.widget     import Widget
-from textual.widgets    import Button, Footer, Header, Static, Digits, Sparkline
-from textual.reactive   import reactive
+from textual.widgets    import Button, Footer, Header, Static
 
-import random
-from collections import deque
-
-
-from src import api
 
 from view.overview import Form as OverviewPage
-
-
-class ProxiesPage(Widget):
-    """代理页面"""
-    def compose(self) -> ComposeResult:
-        # 将来这里可以放一个DataTable来显示所有代理
-        yield Static("这里是 [bold steelblue]代理[/bold steelblue] 页面。\n\n可以显示所有代理服务器、策略组和延迟信息。")
+from view.proxies  import Form as ProxiesPage
 
 
 class ConnectionsPage(Widget):
