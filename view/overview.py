@@ -29,22 +29,22 @@ class Form(Widget):
         # 上方的四个统计数据格子
         with Grid(id="metrics-grid"):
             with Vertical(classes="metric-box"):
-                yield Static("上行速度 (KB/s)", classes="metric-label")
+                yield Static(lang.get('stat.upload'), classes="metric-label")
                 yield Digits(id="upload-digits", classes="metric-value")
             with Vertical(classes="metric-box"):
-                yield Static("下行速度 (KB/s)", classes="metric-label")
+                yield Static(lang.get('stat.download'), classes="metric-label")
                 yield Digits(id="download-digits", classes="metric-value")
             with Vertical(classes="metric-box"):
-                yield Static("内存占用 (MB)", classes="metric-label")
+                yield Static(lang.get('stat.memory'), classes="metric-label")
                 yield Digits(id="memory-digits", classes="metric-value")
             with Vertical(classes="metric-box"):
-                yield Static("连接数量", classes="metric-label")
+                yield Static(lang.get('stat.connect'), classes="metric-label")
                 yield Digits(id="connections-digits", classes="metric-value")
 
         # 下方的速度历史折线图
         with Vertical(id="sparkline-container"):
-            yield Static("速度历史 (KB/s)", classes="sparkline-label")
-            yield Sparkline(self.history_upload, id="upload-sparkline", summary_function=max)
+            yield Static(lang.get('stat.history'), classes="sparkline-label")
+            yield Sparkline(self.history_upload,   id="upload-sparkline", summary_function=max)
             yield Sparkline(self.history_download, id="download-sparkline", summary_function=max)
 
     def on_mount(self):
@@ -70,7 +70,6 @@ class Form(Widget):
         self.query_one("#download-sparkline", Sparkline).data = list(self.history_download)
 
 
-    # 当响应式变量变化时，这些watch方法会自动被调用，从而更新UI
     def watch_upload(self, upload: int) -> None:
         self.query_one("#upload-digits", Digits).update(f"{upload}")
 

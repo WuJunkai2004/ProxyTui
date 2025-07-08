@@ -1,0 +1,9 @@
+{
+
+"stat.upload": "Upload Speed (KB/s)",
+"stat.download": "Download Speed (KB/s)",
+"stat.memory": "Memory Usage (MB)",
+"stat.connect": "Connections Count",
+"stat.history": "Speed History (KB/s)"
+
+}
