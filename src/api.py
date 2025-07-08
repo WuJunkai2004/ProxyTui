@@ -11,11 +11,16 @@ _api_rules = {
 #   'updataConfig': ('PUT', '/config'),
     'reloadConfig': ('PUT', '/configs'),
     'getRules'  : ('GET', '/rules'),
+    'getMemory' : ('GET', '/memory'),
+    'getVersion': ('GET', '/version'),
+    'clearFakeIP': ('POST', '/cache/fakeip/flush'),
+    'getConnections': ('GET', '/connections'),
 }
 
 _keep_alive = [
     'getTraffic',
     'getLogs',
+    'getMemory',
 ]
 
 
@@ -32,7 +37,7 @@ class API:
         if secret:
             self.headers['Authorization'] = f'Bearer {secret}'
 
-    def __getattr__(self, name):
+    def __getattr__(self, name) -> callable:
         """
         Dynamically create methods for API endpoints based on _api_rules.
         """

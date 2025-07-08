@@ -1,0 +1,26 @@
+#metrics-grid {
+    grid-size: 4 1;
+    grid-gutter: 1 2;
+    margin-bottom: 1;
+}
+.metric-box {
+    padding: 1;
+    border: round $primary;
+    align: center middle;
+    height: 100%;
+}
+.metric-label {
+    color: $text-muted;
+    margin-bottom: 1;
+}
+.metric-value {
+    height: 1fr;
+}
+#sparkline-container {
+    padding: 1;
+    border: round $primary;
+}
+.sparkline-label {
+    margin-left: 2;
+    margin-bottom: 1;
+}
