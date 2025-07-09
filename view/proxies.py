@@ -1,15 +1,21 @@
-from textual.widgets import Static, Digits, Sparkline, Button
-from textual.containers import Widget, Grid, Vertical
+from textual.widgets import Static, Button, Switch, Collapsible
+from textual.containers import Widget, Grid, Vertical, VerticalScroll
 from textual.reactive import reactive
 
 
 from json import loads as JSONParser
-
+from base64 import b64encode
 
 
 from src import lang
 from src import api
 from src import config
+
+
+def validate(string: str) -> str:
+    base = b64encode(string.encode()).decode()
+    return base.replace('=', '').replace('+', '').replace('/', '')
+
 
 
 class ProxyNode:
@@ -29,8 +35,14 @@ class ProxyGroup:
         self.proxies = data['all'].copy()
 
 
+class ProxyWidget(Static):
+    def __init__(self, node: ProxyNode):
+        super().__init__(id=f'proxy-{validate(node.name)}', classes='proxy-widget')
+        self.node = node
+        self.update()
 
-
+    def render(self):
+        return f'{self.node.name} - {"Alive" if self.node.alive else "Dead"} - {self.node.delay}ms'
 
 class Form(Widget):
     DEFAULT_CSS = config.style("tss/proxies.css")
@@ -59,21 +71,19 @@ class Form(Widget):
     def compose(self):
         # 顶部的按钮栏
         with Grid(id="header-grid"):
-            yield Static(lang.get('header.title'), classes="header-title")  # 标题
-            yield Button(lang.get('header.refresh'), id="refresh-button", classes="header-button")
-            yield Button(lang.get('header.hide_unavailable'), id="hide-button", classes="header-button")
+            yield Button(lang.get('header.refresh'), id="refresh-button")
+            yield Static(lang.get('header.hide'), id="hide-label")
+            yield Switch(False, id="hide-button")
     
         # 代理组和节点信息
-        with Grid(id="settings-grid"):
+        with VerticalScroll(id="proxies-scroll-view"):
             for group in self.groups:
-                with Vertical(classes="group-box"):
-                    yield Static(group.name, classes="group-label")
-                    yield Static(lang.get('stat.now') + str(group.now), classes="group-now")
-                    for node in group.proxies:
-                        if node in self.nodes:
-                            node_data = self.nodes[node]
-                            yield Static(node_data.name, classes="node-name")
-                            yield Static(lang.get('stat.delay') + str(node_data.delay), classes="node-delay")
-                        else:
-                            yield Static(node, classes="node-name")
+                with Collapsible(title=group.name, collapsed_symbol='', expanded_symbol='', classes='collapsible-group', id=f"group-{validate(group.name)}"):
+                    with Vertical():
+                        for node in group.proxies:
+                            if node in self.nodes:
+                                widget = ProxyWidget(self.nodes[node])
+                            else:
+                                widget = ProxyWidget(ProxyNode({'name': node, 'alive': False, 'history': []}))
+                            yield widget
             

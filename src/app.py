@@ -101,3 +101,8 @@ class ClashUI(App):
 
         if event.button.id:
             self.switch_page(event.button.id)
+
+
+
+def command(cmd: str) -> int:
+    pass
