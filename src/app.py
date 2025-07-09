@@ -4,6 +4,8 @@ from textual.widget     import Widget
 from textual.widgets    import Button, Footer, Header, Static
 
 
+from src import config
+
 from view.overview import Form as OverviewPage
 from view.proxies  import Form as ProxiesPage
 
@@ -43,6 +45,11 @@ class ClashUI(App):
         "config":   ConfigPage,
     }
 
+    def __init__(self, **kwargs) -> None:
+        super().__init__(**kwargs)
+        self.now_at = config.first_page
+        self.cache = {}  # 用于缓存页面实例，避免重复创建
+
     def compose(self) -> ComposeResult:
         """创建应用的子组件。"""
         yield Header(show_clock=True)
@@ -63,7 +70,6 @@ class ClashUI(App):
 
     def on_mount(self) -> None:
         """当应用首次加载时调用，挂载默认页面。"""
-        self.now_at = "overview"
         self.switch_page(self.now_at, True)
 
     def switch_page(self, page_id: str, forced: bool = False) -> None:
@@ -71,6 +77,12 @@ class ClashUI(App):
         page_class = self.PAGES.get(page_id)
         if not page_class:
             return
+
+        if page_id in self.cache:
+            page_instance = self.cache[page_id]
+        else:
+            page_instance = page_class()
+            self.cache[page_id] = page_instance
         
         if self.now_at == page_id and not forced:
             return
@@ -78,7 +90,7 @@ class ClashUI(App):
 
         right_pane = self.query_one("#right-pane")
         right_pane.remove_children()
-        right_pane.mount(page_class())
+        right_pane.mount(page_instance)
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """当导航按钮被按下时，切换页面。"""

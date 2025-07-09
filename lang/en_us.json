@@ -4,6 +4,8 @@
 "stat.download": "Download Speed (KB/s)",
 "stat.memory": "Memory Usage (MB)",
 "stat.connect": "Connections Count",
-"stat.history": "Speed History (KB/s)"
+"stat.history": "Speed History (KB/s)",
+
+"help.text": "proxy [options]\n\nOptions:\n  on\t\tEnable the proxy\n  off\t\tDisable the proxy\n  status\t\tShow current proxy status\n  help\t\tShow this help message\n\n"
 
 }
