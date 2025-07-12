@@ -1,24 +1,39 @@
-.input-box{
+.input-box {
+    /* 要求1：标签和输入框分两行 */
+    layout: vertical;
     width: 100%;
     border: solid #ccc;
-    height: 6;
+    /* 高度由内容自动决定，内容为两行 */
+    height: auto; 
+    padding: 0 1;
+    margin-bottom: 1;
 }
 
-.switch-box{
+.switch-box {
+    /* 要求2：标签在左，开关在右，占一行 */
+    layout: grid;
+    grid-size: 2;
+    grid-columns: 1fr auto; /* 标签占据剩余空间，开关占据自身所需空间 */
+    align: center middle;   /* 垂直居中 */
     width: 100%;
     border: solid #ccc;
-    height: 6;
+    height: auto; 
+    padding: 0 1;
+    margin-bottom: 1;
 }
 
-
-.box-lable{
-    align-horizontal: left;
+.box-label {
+    /* 无需特殊样式，其对齐和尺寸由父容器 .switch-box 的 grid 布局控制 */
 }
 
-.box-input{
+.box-input {
+    /* 移除输入框的默认边框，使其融入父容器 */
     border: none;
+    /* 建议设置背景色以匹配应用主题 */
+    background: $surface; 
 }
 
-.box-toggle{
-
+.box-toggle {
+    /* 无需特殊样式，其位置由父容器 .switch-box 的 grid 布局控制 */
+    width: auto;
 }
