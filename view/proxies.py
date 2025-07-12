@@ -42,7 +42,10 @@ class ProxyWidget(Static):
         self.update()
 
     def render(self):
-        return f'{self.node.name} - {"Alive" if self.node.alive else "Dead"} - {self.node.delay}ms'
+        if(self.node.alive):
+            return f'{self.node.name} - {self.node.delay}ms'
+        else:
+            return f'{self.node.name} - [red]×[/red]'
 
 class Form(Widget):
     DEFAULT_CSS = config.style("tss/proxies.css")
@@ -82,8 +85,7 @@ class Form(Widget):
                     with Vertical():
                         for node in group.proxies:
                             if node in self.nodes:
-                                widget = ProxyWidget(self.nodes[node])
+                                yield ProxyWidget(self.nodes[node])
                             else:
-                                widget = ProxyWidget(ProxyNode({'name': node, 'alive': False, 'history': []}))
-                            yield widget
+                                yield ProxyWidget(ProxyNode({'name': node, 'alive': False, 'history': []}))
             

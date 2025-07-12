@@ -1,10 +1,11 @@
 /* 顶部按钮栏样式 */
 #header-grid {
-    layout: horizontal;
+    layout: grid;
     padding: 0;
     border-bottom: heavy $background;
     background: $panel;
     height: 3;
+    align-vertical: middle;
 }
 
 #refresh-button {
