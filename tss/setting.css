@@ -5,8 +5,6 @@
     border: solid #ccc;
     /* 高度由内容自动决定，内容为两行 */
     height: auto; 
-    padding: 0 1;
-    margin-bottom: 1;
 }
 
 .switch-box {
@@ -27,13 +25,15 @@
 }
 
 .box-input {
-    /* 移除输入框的默认边框，使其融入父容器 */
-    border: none;
-    /* 建议设置背景色以匹配应用主题 */
     background: $surface; 
 }
 
 .box-toggle {
     /* 无需特殊样式，其位置由父容器 .switch-box 的 grid 布局控制 */
     width: auto;
+}
+
+.box-toggle > .switch--slider {
+    color: dodgerblue;
+    background: darkslateblue;
 }

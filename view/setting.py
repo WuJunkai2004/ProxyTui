@@ -4,9 +4,7 @@ from textual.reactive import reactive
 
 
 from src import lang
-from src import api
 from src import config
-from src import plat
 
 
 class InputBox(Widget):
@@ -19,16 +17,15 @@ class InputBox(Widget):
     def __init__(self, label: str, default_value: str = "", **kwargs):
         super().__init__(**kwargs, classes="input-box")
         self.label = label
-        # self.real 用于存储实际数据
         self.real = default_value
 
     def compose(self):
         # 布局由 .input-box 的 CSS 控制 (layout: vertical)
         yield Label(f' {self.label}', classes="box-label")
-        yield Input(value=self.data, classes="box-input")
+        yield Input(classes="box-input", placeholder=self.real)
 
     def getData(self) -> str:
-        """获取当前输入框的值。"""
+        """获取当前输入框的值。""" 
         return self.real
     
     def on_mount(self):
@@ -40,11 +37,6 @@ class InputBox(Widget):
         self.real = value
 
     def on_input_changed(self, event: Input.Changed) -> None:
-        """
-        【错误修正】
-        当用户在输入框中键入时，此方法会被调用。
-        它会更新 reactive 变量 self.data，从而触发 watch_data。
-        """
         event.stop()  # 防止事件冒泡
         self.data = event.value
 
@@ -79,11 +71,6 @@ class SwitchBox(Widget):
         self.real = value
 
     def on_switch_changed(self, event: Switch.Changed) -> None:
-        """
-        【错误修正】
-        当用户切换 Switch 时，此方法会被调用。
-        它会更新 reactive 变量 self.data，从而触发 watch_data。
-        """
         event.stop()  # 防止事件冒泡
         self.data = event.value
 
@@ -94,7 +81,17 @@ class Form(Widget):
         super().__init__(**kwargs)
 
     def compose(self):
-        with VerticalScroll(id="setting-scroll"):
-            yield InputBox("Clash 配置文件路径", 'config.yaml')
-            yield InputBox("Clash 日志文件路径", 'clash.log')
-            yield SwitchBox("启用 Clash 内核日志", True)
+        with VerticalScroll():
+            yield InputBox(
+                lang.get('clash.path'),
+                config.clash_path
+            )
+            yield InputBox(
+                lang.get('clash.api_url'),
+                config.URL
+            )
+            yield InputBox(
+                lang.get('clash.secret'),
+                config.secret or ""
+            )
+            
