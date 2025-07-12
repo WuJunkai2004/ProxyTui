@@ -8,6 +8,7 @@ from src import config
 
 from view.overview import Form as OverviewPage
 from view.proxies  import Form as ProxiesPage
+from view.setting  import Form as SettingPage
 
 
 class ConnectionsPage(Widget):
@@ -23,12 +24,6 @@ class LogsPage(Widget):
         yield Static("这里是 [bold steelblue]日志[/bold steelblue] 页面。\n\n可以显示 Clash 内核的实时日志信息。")
 
 
-class ConfigPage(Widget):
-    """配置页面"""
-    def compose(self) -> ComposeResult:
-        yield Static("这里是 [bold steelblue]配置[/bold steelblue] 页面。\n\n可以用来查看和修改部分配置，例如代理模式。")
-
-
 # --- 主应用 ---
 class ClashUI(App):
     """一个用于Clash的Textual用户界面。"""
@@ -42,7 +37,7 @@ class ClashUI(App):
         "proxies":  ProxiesPage,
         "conns":    ConnectionsPage,
         "logs":     LogsPage,
-        "config":   ConfigPage,
+        "config":   SettingPage,
     }
 
     def __init__(self, **kwargs) -> None:
@@ -56,7 +51,7 @@ class ClashUI(App):
         
         with Horizontal(id="main-screen"):
             with VerticalScroll(id="left-pane"):
-                yield Button("Overview", id="overview", classes="active")
+                yield Button("Overview", id="overview")
                 yield Button("Proxies",  id="proxies")
                 yield Button("Conns",    id="conns")
                 yield Button("Logs",     id="logs")
@@ -70,6 +65,7 @@ class ClashUI(App):
 
     def on_mount(self) -> None:
         """当应用首次加载时调用，挂载默认页面。"""
+        self.query_one(f"#{self.now_at}").add_class("active")
         self.switch_page(self.now_at, True)
 
     def switch_page(self, page_id: str, forced: bool = False) -> None:

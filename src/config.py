@@ -11,3 +11,7 @@ secret = None
 LANG = 'en_us'
 
 first_page = 'overview'
+
+with open('config.ini', 'r', encoding='utf-8') as file:
+    for line in file:
+        exec(line.strip())

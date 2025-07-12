@@ -178,3 +178,5 @@ rawdata/
 # test data
 example/
 test/
+*.txt
+*.ini
