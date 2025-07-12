@@ -1,0 +1,24 @@
+.input-box{
+    width: 100%;
+    border: solid #ccc;
+    height: 6;
+}
+
+.switch-box{
+    width: 100%;
+    border: solid #ccc;
+    height: 6;
+}
+
+
+.box-lable{
+    align-horizontal: left;
+}
+
+.box-input{
+    border: none;
+}
+
+.box-toggle{
+
+}
