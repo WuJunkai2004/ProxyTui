@@ -90,9 +90,11 @@ class ClashUI(App):
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """当导航按钮被按下时，切换页面。"""
+        if event.button.id not in self.PAGES:
+            return
+
         for button in self.query("#left-pane Button"):
             button.remove_class("active")
-
         event.button.add_class("active")
 
         if event.button.id:

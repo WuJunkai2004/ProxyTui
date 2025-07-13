@@ -12,7 +12,7 @@
     layout: grid;
     grid-size: 2;
     grid-columns: 1fr auto; /* 标签占据剩余空间，开关占据自身所需空间 */
-    align: center middle;   /* 垂直居中 */
+    align-vertical: middle; /* 标签和开关垂直居中对齐 */
     width: 100%;
     border: solid #ccc;
     height: auto; 
@@ -36,4 +36,17 @@
 .box-toggle > .switch--slider {
     color: dodgerblue;
     background: darkslateblue;
+}
+
+
+#Footer {
+    dock: bottom;
+    width: 100%;
+    height: auto;
+    align: right bottom;
+    border-top: solid #aaa;
+}
+
+#save{
+    border: none;
 }

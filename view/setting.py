@@ -1,5 +1,5 @@
-from textual.widgets import Switch, Label, Input
-from textual.containers import Widget, VerticalScroll
+from textual.widgets import Switch, Label, Input, Button
+from textual.containers import Widget, VerticalScroll, Grid
 from textual.reactive import reactive
 
 
@@ -94,4 +94,15 @@ class Form(Widget):
                 lang.get('clash.secret'),
                 config.secret or ""
             )
-            
+            yield SwitchBox(
+                lang.get('clash.enable'),
+                True
+            )
+
+        with Grid(id = 'Footer'):
+            yield Button(
+                lang.get('clash.save'),
+                id = 'save',
+                classes = 'button',
+                variant = 'primary'
+            )
